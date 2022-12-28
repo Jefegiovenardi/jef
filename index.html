@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        background-color: #f5f5f5;
+        background-size: cover;
+        background-position: center;
+      }
+      .center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 5px;
+      }
+      .nao-button {
+        position: fixed;
+        margin-left: 100px;
+      }
+      h1 {
+        font-family: 'Helvetica Neue', sans-serif;
+        font-size: 36px;
+        color: #fff;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 4px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+      button {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 18px;
+  color: #fff;
+  background-color: transparent;
+  border: none;
+  border-radius: 7%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  margin-left: -100px;
+  padding: 5px;
+}
+button:hover {
+  background: linear-gradient(to right, #ff0000, #ffff00);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+.sim-button {
+  background-color: #00c853;
+}
+.sim-button:before {
+  content: '\f00c';
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+.nao-button {
+  background-color: #d50000;
+}
+.nao-button:before {
+  content: '\f00d';
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+      .nao-button.transition1 {
+        transition: all 0.2s ease-in-out;
+      }
+      .nao-button.transition2 {
+        transition: all 0.4s ease-in-out;
+      }
+      .nao-button.transition3 {
+        transition: all 0.6s ease-in-out;
+      }
+      .nao-button.transition4 {
+        transition: all 0.8s ease-in-out;
+      }
+      .nao-button.transition5{
+        transition: all 1s ease-in-out;
+      }
+      .nao-button.transition1:hover {
+        transform: rotate(180deg);
+      }
+      .nao-button.transition2:hover {
+        transform: rotate(360deg);
+      }
+      .nao-button.transition3:hover {
+        transform: scale(2);
+      }
+      .nao-button.transition4:hover {
+        transform: skew(20deg);
+      }
+      .nao-button.transition5:hover {
+        transform: translate(50px, 50px);
+      }
+    </style>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="center">
+      <h1>Você ama o Jeferson?</h1>
+    </div>
+    <div class="center">
+      <button class="sim-button" onclick="showMessage()">Sim</button>
+      <button class="nao-button" onmouseover="randomizePosition()">Não</button>
+    </div>
+    <script>
+      function showMessage() {
+        document.body.innerHTML = '<div class="center"><h1>Todos amam</h1></div><div class="center"></div>';
+      }
+      function randomizePosition() {
+        var naoButton = document.querySelector('.nao-button');
+        var x = Math.floor(Math.random() * (window.innerWidth - naoButton.offsetWidth));
+        var y = Math.floor(Math.random() * (window.innerHeight - naoButton.offsetHeight));
+        naoButton.style.left = x + 'px';
+        naoButton.style.top = y + 'px';
+        var transitions = ['transition1', 'transition2', 'transition3', 'transition4', 'transition5'];
+        var randomTransition = transitions[Math.floor(Math.random() * transitions.length)];
+        naoButton.classList.add(randomTransition);
+      }
+    </script>
+  </body>
+</html>
