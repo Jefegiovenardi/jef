@@ -14,8 +14,7 @@
         margin: 5px;
       }
       .nao-button {
-        position: fixed;
-        margin-left: 100px;
+        position: absolute;
       }
       h1 {
         font-family: 'Helvetica Neue', sans-serif;
@@ -28,6 +27,7 @@
       }
       button {
   font-family: 'Helvetica Neue', sans-serif;
+  display: inline-block;
   font-size: 18px;
   color: #fff;
   background-color: transparent;
@@ -36,8 +36,8 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease-in-out;
   cursor: pointer;
-  margin-left: -100px;
-  padding: 5px;
+  padding: 10px;
+  margin: 10px;
 }
 button:hover {
   background: linear-gradient(to right, #ff0000, #ffff00);
@@ -45,52 +45,46 @@ button:hover {
 }
 .sim-button {
   background-color: #00c853;
+
 }
 .sim-button:before {
-  content: '\f00c';
-  font-family: 'Font Awesome 5 Free';
   font-weight: 900;
 }
 .nao-button {
   background-color: #d50000;
 }
 .nao-button:before {
-  content: '\f00d';
-  font-family: 'Font Awesome 5 Free';
   font-weight: 900;
 }
       .nao-button.transition1 {
         transition: all 0.2s ease-in-out;
       }
       .nao-button.transition2 {
-        transition: all 0.4s ease-in-out;
+        transition: all 0.5s ease-in-out;
       }
       .nao-button.transition3 {
-        transition: all 0.6s ease-in-out;
+        transition: all 0.2s ease-in-out;
       }
       .nao-button.transition4 {
-        transition: all 0.8s ease-in-out;
+
+        transition: all 0.4s ease-in-out;
       }
       .nao-button.transition5{
-        transition: all 1s ease-in-out;
+        transition: all 0.3s ease-in-out;
       }
-      .nao-button.transition1:hover {
-        transform: rotate(180deg);
-      }
-      .nao-button.transition2:hover {
-        transform: rotate(360deg);
-      }
-      .nao-button.transition3:hover {
-        transform: scale(2);
-      }
-      .nao-button.transition4:hover {
-        transform: skew(20deg);
-      }
-      .nao-button.transition5:hover {
-        transform: translate(50px, 50px);
+    
+      .messages {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        font-size: 20px;
+        font-weight: bold;
       }
     </style>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
   </head>
   <body>
     <div class="center">
@@ -100,20 +94,56 @@ button:hover {
       <button class="sim-button" onclick="showMessage()">Sim</button>
       <button class="nao-button" onmouseover="randomizePosition()">Não</button>
     </div>
+        <div id= "mensagem" class="messages"></div>
     <script>
+
+      var count = 0;
+      var updateCount = 0;
+      var messages = ["Sério isso?", "Poxa eu achei que tinhamos algo bacana...", "Você realmente não vai parar de tentar?", "Cara, não é possível.", "Me odeia?", "Pode crê.", "Eu vou lembrar disso.", "Já deu né?", "Você não vai conseguir, é sério, o código não deixa.", "Paremo né.", "Acabou o respeito.", "Olha, sinceramente..."];
+      var messageIndex = 0;
+
+function randomizePosition() {
+  console.log(count)
+  var naoButton = document.querySelector('.nao-button');
+  var buttonWidth = naoButton.offsetWidth;
+  var buttonHeight = naoButton.offsetHeight;
+  var x = Math.floor(Math.random() * (window.innerWidth - buttonWidth));
+  var y = Math.floor(Math.random() * (window.innerHeight - buttonHeight));
+  var minX = (window.innerWidth - buttonWidth) * 0.15; // Área permitida ocupa 70% da tela, então 15% é o limite mínimo
+  var maxX = (window.innerWidth - buttonWidth) * 0.85; // Área permitida ocupa 70% da tela, então 85% é o limite máximo
+  if (x < minX || x > maxX) {
+    x = Math.floor(Math.random() * (window.innerWidth - buttonWidth));
+  }
+  var minY = (window.innerHeight - buttonHeight) * 0.15;
+  var maxY = (window.innerHeight - buttonHeight) * 0.85;
+  if (y < minY || y > maxY) {
+    y = Math.floor(Math.random() * (window.innerHeight - buttonHeight));
+  }
+
+  naoButton.style.left = x + 'px';
+  naoButton.style.top = y + 'px';
+
+  var transitions = ['transition1', 'transition2', 'transition3', 'transition4', 'transition5'];
+  var randomTransition = transitions[Math.floor(Math.random() * transitions.length)];
+  naoButton.classList.add(randomTransition);
+
+  count++;
+  if (count >= 5) {
+    if (updateCount === 3) {
+      messageIndex = (messageIndex + 1) % messages.length;
+      updateCount = 0;
+    } else {
+      updateCount++;
+    }
+    mensagem.textContent = messages[messageIndex];
+  }
+}
+
+
       function showMessage() {
         document.body.innerHTML = '<div class="center"><h1>Todos amam</h1></div><div class="center"></div>';
       }
-      function randomizePosition() {
-        var naoButton = document.querySelector('.nao-button');
-        var x = Math.floor(Math.random() * (window.innerWidth - naoButton.offsetWidth));
-        var y = Math.floor(Math.random() * (window.innerHeight - naoButton.offsetHeight));
-        naoButton.style.left = x + 'px';
-        naoButton.style.top = y + 'px';
-        var transitions = ['transition1', 'transition2', 'transition3', 'transition4', 'transition5'];
-        var randomTransition = transitions[Math.floor(Math.random() * transitions.length)];
-        naoButton.classList.add(randomTransition);
-      }
+
     </script>
   </body>
 </html>
